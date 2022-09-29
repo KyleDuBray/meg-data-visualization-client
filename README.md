@@ -8,4 +8,15 @@ Project for Database Management Systems focused on magnetoencephalography (MEG) 
 
 `cd` into both the [client](/client) and [server](/server) folders and run `npm i` in each directory to install all npm packages for both the client and server.
 
-After all packages are installed, you can run `npm start` and `npm run dev` in the client and server, respectively, to run each locally.
+Add a `.env` file to the root of the project and add the following keys:
+
+```sh
+HOST
+DB_USER
+DB_PASSWORD
+DB_NAME
+```
+
+Run the SQL code in the [/server/sql/db.sql](/server/sql/db.sql) file in the database you have already created that has the login credentials, host, and name you are referencing with your environment variables.
+
+You can now run `npm start` in the client and `npm run dev` in the server to start up the application locally.
