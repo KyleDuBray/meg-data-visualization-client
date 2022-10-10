@@ -10,30 +10,35 @@ const Navbar = () => {
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 {/* https://icons8.com/icons/set/brain */}
-                <img
-                  className="h-8 w-8"
-                  src="./icons/brain.png"
-                  alt="brain icon"
-                />
+                <Link to="/">
+                  <img
+                    className="h-8 w-8"
+                    src="./icons/brain.png"
+                    alt="brain icon"
+                  />
+                </Link>
               </div>
-              <div className="hidden md:block">
-                <div className="ml-10 flex items-baseline space-x-4">
+              {/* <-- Main Nav Links --> */}
+              <div>
+                <ul className="ml-10 flex items-baseline space-x-4">
                   {/*<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                    NEED TO ADD LINKS HERE with styling:
                    className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"*/}
-                  <div className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium">
-                    Home
-                  </div>
-                  <div className="text-gray-300 hover:bg-gray-700 hover:text-white">
-                    About
-                  </div>
-                  <div className="text-gray-300 hover:bg-gray-700 hover:text-white">
-                    Contact
-                  </div>
-                </div>
+
+                  <li className=" text-gray-300 hover:bg-gray-700 hover:text-white font-medium">
+                    <Link to="/">Home</Link>
+                  </li>
+                  <li className="text-gray-300 hover:bg-gray-700 hover:text-white font-medium">
+                    <Link to="/about">About</Link>
+                  </li>
+                  <li className="text-gray-300 hover:bg-gray-700 hover:text-white font-medium">
+                    <Link to="/contact">Contact</Link>
+                  </li>
+                </ul>
               </div>
             </div>
-            <div className="hidden md:block">
+            {/*<!-- Profile and Notifications -->*/}
+            <div>
               <div className="ml-4 flex items-center md:ml-6">
                 <button
                   type="button"
