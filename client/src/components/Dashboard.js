@@ -1,10 +1,11 @@
 import React from "react";
 import RegistrationForm from "./forms/RegistrationForm";
+import { useSelector } from "react-redux";
 
 const Dashboard = () => {
   // Will come from authstate later to determine if user is currently logged in, and if so,
   // show user's dashboard. Otherwise, show login/register view.
-  const isAuthenticated = false;
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   return (
     <>

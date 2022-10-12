@@ -4,6 +4,7 @@ import express from "express";
 import cors from "cors";
 
 import usersRouter from "../routes/api/users.js";
+import authRouter from "../routes/api/auth.js";
 
 console.log();
 const app = express();
@@ -18,6 +19,7 @@ dbConnection.connect((error) => {
 });
 
 app.use("/api/users", usersRouter);
+app.use("/api/auth", authRouter);
 
 const expressServer = app.listen(5000, () => {
   console.log("Listening on port 5000");

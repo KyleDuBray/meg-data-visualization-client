@@ -1,17 +1,31 @@
 import React from "react";
 import { Form, Field } from "react-final-form";
-import { useDispatch } from "react-redux";
-import { register } from "../../slices/registrationSlice";
+import axios from "axios";
 
 const RegistrationForm = () => {
   const LABELSTYLES = "block mb-2 text-sm font-medium text-gray-900 mt-5";
   const FIELDSTYLES =
     "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5";
 
-  const dispatch = useDispatch();
-
-  const onSubmit = (values) => {
-    dispatch(register(values));
+  const onSubmit = async (values) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const body = JSON.stringify(values);
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/api/users",
+        body,
+        config
+      );
+      console.log(res);
+      console.log("Registration successful.");
+      //dispatch(authenticate);
+    } catch {
+      console.log("There was an error registering your account.");
+    }
   };
 
   const required = (value) => (value ? undefined : "Required");

@@ -15,6 +15,7 @@ HOST
 DB_USER
 DB_PASSWORD
 DB_NAME
+JWT_SECRET
 ```
 
 Run the SQL code in the [/server/sql/db.sql](/server/sql/db.sql) file in the database you have already created that has the login credentials, host, and name you are referencing with your environment variables.
@@ -24,18 +25,20 @@ You can now run `npm start` in the client and `npm run dev` in the server to sta
 ## Running the Python Script
 
 In order to successfully run this script, you must do the following:
+
 - install/update the following modules, if not already:
-    - pandas
-    - matplotlib
-    - numpy
-    - scipy.io
-    - os
-    - mne
-    - mne_features
+
+  - pandas
+  - matplotlib
+  - numpy
+  - scipy.io
+  - os
+  - mne
+  - mne_features
 
 - Obtain the correct data files.
-    - The data files can be found here: https://data.donders.ru.nl/collections/di/dccn/DSC_3015000.00_677?0 .
-        - Note: In order to get access to the files, you must create an account for eduID or some other acceptable account for Donders Repository.
-    - Once you have access, you need to download the A1-raw.fif and A1-eve.fif files.
+  - The data files can be found here: https://data.donders.ru.nl/collections/di/dccn/DSC_3015000.00_677?0 .
+    - Note: In order to get access to the files, you must create an account for eduID or some other acceptable account for Donders Repository.
+  - Once you have access, you need to download the A1-raw.fif and A1-eve.fif files.
 
 After you have completed the previous steps, you should be able to run the python script successfully.
