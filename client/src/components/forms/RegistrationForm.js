@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Field } from "react-final-form";
 import axios from "axios";
+import setAuthTokenInLocalStorage from "../../utilities/setAuthTokenInLocalStorage";
 
 const RegistrationForm = () => {
   const LABELSTYLES = "block mb-2 text-sm font-medium text-gray-900 mt-5";
@@ -22,7 +23,7 @@ const RegistrationForm = () => {
       );
       console.log(res);
       console.log("Registration successful.");
-      //dispatch(authenticate);
+      setAuthTokenInLocalStorage(res.data.token);
     } catch {
       console.log("There was an error registering your account.");
     }

@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import setAuthToken from "../utilities/setAuthToken";
 
 const initialState = {
   isAuthenticated: false,
+  token: "",
 };
 
 export const authSlice = createSlice({
@@ -11,7 +11,11 @@ export const authSlice = createSlice({
   reducers: {
     authenticate: (state, action) => {
       if (localStorage.token) {
-        setAuthToken(localStorage.token);
+        console.log(localStorage.token);
+        state.isAuthenticated = true;
+      } else {
+        console.log("No token found, authentication needed.");
+        state.isAuthenticated = false;
       }
     },
   },

@@ -1,18 +1,22 @@
 import Dashboard from "./Dashboard";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import setAuthToken from "../utilities/setAuthToken";
 
 import Navbar from "./Navbar";
+import { useDispatch } from "react-redux";
+import { authenticate } from "../slices/authSlice";
+import { useEffect } from "react";
 
 /*<div className="bg-gradient-to-r from-primary-1 to-primary-2 w-screen h-screen flex">
       <Navbar />
   </div>*/
 
-if (localStorage.token) {
-  setAuthToken(localStorage.token);
-}
-
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(authenticate());
+  }, []);
+
   return (
     <>
       <Router>
