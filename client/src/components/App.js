@@ -3,8 +3,10 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Navbar from "./Navbar";
 import { useDispatch } from "react-redux";
-import { authenticate } from "../slices/authSlice";
+import { authenticate, setCredentials } from "../slices/authSlice";
 import { useEffect } from "react";
+
+import { useGetTokenAuthStatusQuery } from "../slices/authApi";
 
 /*<div className="bg-gradient-to-r from-primary-1 to-primary-2 w-screen h-screen flex">
       <Navbar />
@@ -12,10 +14,14 @@ import { useEffect } from "react";
 
 function App() {
   const dispatch = useDispatch();
+  const { data } = useGetTokenAuthStatusQuery();
 
   useEffect(() => {
-    dispatch(authenticate());
-  }, []);
+    console.log(data);
+    if (data) {
+      dispatch(setCredentials(data));
+    }
+  }, [data]);
 
   return (
     <>

@@ -6,7 +6,6 @@ import cors from "cors";
 import usersRouter from "../routes/api/users.js";
 import authRouter from "../routes/api/auth.js";
 
-console.log();
 const app = express();
 app.use(express.json());
 app.use(cors());

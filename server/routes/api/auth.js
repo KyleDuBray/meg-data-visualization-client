@@ -15,9 +15,9 @@ authRouter.get("/", auth, async (req, res) => {
     const query = `SELECT * FROM meg.user WHERE user_id = ?`;
     const valuesArr = [req.user.id];
     dbConnection.query(query, valuesArr, async (err, results) => {
-      console.log(results);
+      console.log(results[0]);
       if (results && results.length > 0) {
-        res.json(results);
+        return res.status(200).json({ ...results[0] });
       } else return res.status(401).json({ errors: [{ msg: "Unauthorized" }] });
     });
   } catch (err) {
@@ -60,8 +60,6 @@ authRouter.post("/", async (req, res) => {
           id: results[0].user_id,
         },
       };
-
-      console.log(payload);
 
       jwt.sign(payload, secret, { expiresIn: 360000 }, (err, token) => {
         if (err) throw err;
