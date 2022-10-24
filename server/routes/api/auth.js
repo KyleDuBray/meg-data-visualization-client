@@ -15,9 +15,9 @@ authRouter.get("/", auth, async (req, res) => {
     const query = `SELECT * FROM meg.user WHERE user_id = ?`;
     const valuesArr = [req.user.id];
     dbConnection.query(query, valuesArr, async (err, results) => {
-      console.log(results[0]);
       if (results && results.length > 0) {
-        return res.status(200).json({ ...results[0] });
+        const { password, ...cleanedResult } = results[0];
+        return res.status(200).json(cleanedResult);
       } else return res.status(401).json({ errors: [{ msg: "Unauthorized" }] });
     });
   } catch (err) {
@@ -38,15 +38,12 @@ authRouter.post("/", async (req, res) => {
     const query = `SELECT * FROM meg.user WHERE email = ?`;
 
     dbConnection.query(query, valuesArr, async (err, results) => {
-      console.log(results);
-
       if (!results) {
         return res
           .status(400)
           .json({ errors: [{ msg: "Invalid credentials" }] });
       }
 
-      console.log(results.password);
       const isMatch = await bcrypt.compare(password, results[0].password);
 
       if (!isMatch) {
@@ -63,7 +60,12 @@ authRouter.post("/", async (req, res) => {
 
       jwt.sign(payload, secret, { expiresIn: 360000 }, (err, token) => {
         if (err) throw err;
-        res.json({ token });
+        const { password, ...cleanedResult } = results[0];
+        console.log(`Successful login from user ${cleanedResult.user_id}`);
+        return res.status(200).json({
+          token,
+          ...cleanedResult,
+        });
       });
     });
   } catch (err) {

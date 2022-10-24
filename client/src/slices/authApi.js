@@ -12,7 +12,7 @@ export const authApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getTokenAuthStatus: builder.query({
+    getTokenAuthStatus: builder.mutation({
       query: () => ({
         url: "auth",
         method: "GET",
@@ -25,7 +25,18 @@ export const authApi = createApi({
         body: credentials,
       }),
     }),
+    login: builder.mutation({
+      query: (credentials) => ({
+        url: "auth",
+        method: "POST",
+        body: credentials,
+      }),
+    }),
   }),
 });
 
-export const { useGetTokenAuthStatusQuery, useRegisterMutation } = authApi;
+export const {
+  useGetTokenAuthStatusMutation,
+  useRegisterMutation,
+  useLoginMutation,
+} = authApi;
