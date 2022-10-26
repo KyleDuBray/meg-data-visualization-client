@@ -4,6 +4,7 @@ import setAuthTokenInLocalStorage from "../../utilities/setAuthTokenInLocalStora
 import { useLoginMutation } from "../../slices/authApi";
 import { setCredentials, setTokenFromLocal } from "../../slices/authSlice";
 import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const LABELSTYLES = "block mb-2 text-sm font-medium text-gray-900 mt-5";
@@ -12,6 +13,7 @@ const LoginForm = () => {
 
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onSubmit = async (values) => {
     try {
@@ -21,6 +23,7 @@ const LoginForm = () => {
       setAuthTokenInLocalStorage(token);
       dispatch(setTokenFromLocal());
       dispatch(setCredentials(user));
+      navigate("/dashboard");
     } catch {
       console.log("There was an error registering your account.");
     }
@@ -59,12 +62,17 @@ const LoginForm = () => {
             />
           </div>
 
-          <button
-            type="submit"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center mt-5"
-          >
-            Submit
-          </button>
+          <div className="flex items-center mt-5">
+            <button
+              type="submit"
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+            >
+              Submit
+            </button>
+            <div className="ml-5">
+              <Link to="/register">Need to register?</Link>
+            </div>
+          </div>
         </form>
       )}
     />

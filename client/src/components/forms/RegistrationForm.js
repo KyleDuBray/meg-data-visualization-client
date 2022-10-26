@@ -4,6 +4,7 @@ import setAuthTokenInLocalStorage from "../../utilities/setAuthTokenInLocalStora
 import { useRegisterMutation } from "../../slices/authApi";
 import { useDispatch } from "react-redux";
 import { setTokenFromLocal } from "../../slices/authSlice";
+import { Link, useNavigate } from "react-router-dom";
 
 const RegistrationForm = () => {
   const LABELSTYLES = "block mb-2 text-sm font-medium text-gray-900 mt-5";
@@ -12,6 +13,7 @@ const RegistrationForm = () => {
 
   const [register, { isLoading }] = useRegisterMutation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onSubmit = async (values) => {
     const { confirmPassword, ...regVals } = values;
@@ -21,6 +23,7 @@ const RegistrationForm = () => {
       console.log(res);
       setAuthTokenInLocalStorage(res.data.token);
       dispatch(setTokenFromLocal());
+      navigate("/dashboard");
     } catch {
       console.log("There was an error registering your account.");
     }
@@ -102,13 +105,18 @@ const RegistrationForm = () => {
               className={FIELDSTYLES}
             />
           </div>
+          <div className="flex items-center mt-5">
+            <button
+              type="submit"
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+            >
+              Submit
+            </button>
 
-          <button
-            type="submit"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center mt-5"
-          >
-            Submit
-          </button>
+            <div className="ml-5">
+              <Link to="/login">Already have an account?</Link>
+            </div>
+          </div>
         </form>
       )}
     />
