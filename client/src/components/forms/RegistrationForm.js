@@ -35,7 +35,7 @@ const RegistrationForm = () => {
     <Form
       onSubmit={onSubmit}
       render={({ handleSubmit, form, submitting, pristine, values }) => (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="h-screen">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">
             Register
           </h1>
@@ -108,7 +108,7 @@ const RegistrationForm = () => {
           <div className="flex items-center mt-5">
             <button
               type="submit"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+              className="text-white bg-gray-800 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
             >
               Submit
             </button>
