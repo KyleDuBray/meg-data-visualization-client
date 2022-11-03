@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../slices/authSlice";
+import useMenuToggler from "../hooks/useMenuToggler";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.auth.user);
+
+  const [toggleMenu, setToggleMenu] = useState(false);
+
+  const wrapperRef = useRef(null);
+  const [isOpen, setIsOpen] = useMenuToggler(wrapperRef);
+
   return (
     <div className="min-h-full">
       <nav className="bg-gray-800">
@@ -67,7 +79,9 @@ const Navbar = () => {
                 <div className="relative ml-3">
                   <div>
                     <button
+                      ref={wrapperRef}
                       type="button"
+                      onClick={() => setIsOpen(!isOpen)}
                       className="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                       id="user-menu-button"
                       aria-expanded="false"
@@ -96,27 +110,57 @@ const Navbar = () => {
                   From: "transform opacity-100 scale-100"
                   To: "transform opacity-0 scale-95"
               -->*/}
-                  {/*
                   <div
-                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    className={`${
+                      !isOpen ? "opacity-0" : ""
+                    } absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
                     tabIndex="-1"
                   >
-                    {/*<!-- Active: "bg-gray-100", Not Active: "" --> NEED LINKS HERE LIKE:
-                <Link
-                  href="#"
-                  className="block px-4 py-2 text-sm text-gray-700"
-                  role="menuitem"
-                  tabindex="-1"
-                  id="user-menu-item-0"
-                >
-                  Your Profile
-                </Link>
-
+                    {/* DROPDOWN LINKS */}
+                    {user ? (
+                      <>
+                        <Link
+                          to="/"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+                          role="menuitem"
+                          tabIndex="-1"
+                          id="user-menu-item-0"
+                        >
+                          Your Profile
+                        </Link>
+                        <button
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 w-full text-left"
+                          onClick={() => dispatch(logout())}
+                        >
+                          Log out
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <Link
+                          to="/login"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+                          role="menuitem"
+                          tabIndex="-1"
+                          id="user-menu-item-0"
+                        >
+                          Login
+                        </Link>
+                        <Link
+                          to="/register"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+                          role="menuitem"
+                          tabIndex="-1"
+                          id="user-menu-item-0"
+                        >
+                          Register
+                        </Link>
+                      </>
+                    )}
                   </div>
-                  */}
                 </div>
               </div>
             </div>
