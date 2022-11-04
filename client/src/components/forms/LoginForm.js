@@ -8,8 +8,9 @@ import { Link, useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const LABELSTYLES = "block mb-2 text-sm font-medium text-gray-900 mt-5";
-  const FIELDSTYLES =
+  const INPUTSTYLES =
     "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-800 focus:border-blue-500 block w-full p-2.5";
+  const ERRORSTYLES = "text-red-600";
 
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useDispatch();
@@ -38,26 +39,41 @@ const LoginForm = () => {
         render={({ handleSubmit, form, submitting, pristine, values }) => (
           <form onSubmit={handleSubmit}>
             <h1 className="text-3xl text-center font-bold tracking-tight text-gray-900 mb-4">
-              Sign in to your account
+              Log in to your account
             </h1>
             <div className="bg-white pt-2 px-8 pb-4 rounded">
-              <label className={LABELSTYLES}>Email</label>
-              <Field
-                name="email"
-                component="input"
-                placeholder="Email"
-                validate={required}
-                className={FIELDSTYLES}
-              />
-              <label className={LABELSTYLES}>Password</label>
-              <Field
-                name="password"
-                component="input"
-                type="password"
-                placeholder="Password"
-                validate={required}
-                className={FIELDSTYLES}
-              />
+              <Field name="email" validate={required}>
+                {({ input, meta }) => (
+                  <div>
+                    <label className={LABELSTYLES}>Email</label>
+                    <input
+                      {...input}
+                      className={INPUTSTYLES}
+                      type="text"
+                      placeholder="Email"
+                    />
+                    {meta.error && meta.touched && (
+                      <span className={ERRORSTYLES}>{meta.error}</span>
+                    )}
+                  </div>
+                )}
+              </Field>
+              <Field name="password" validate={required}>
+                {({ input, meta }) => (
+                  <div>
+                    <label className={LABELSTYLES}>Password</label>
+                    <input
+                      {...input}
+                      className={INPUTSTYLES}
+                      type="password"
+                      placeholder="Password"
+                    />
+                    {meta.error && meta.touched && (
+                      <span className={ERRORSTYLES}>{meta.error}</span>
+                    )}
+                  </div>
+                )}
+              </Field>
 
               <div className="flex items-center mt-5">
                 <button
