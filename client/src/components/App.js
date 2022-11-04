@@ -36,8 +36,8 @@ function App() {
     <>
       <Router>
         <Navbar />
-        <div className="bg-gradient-to-b from-white to-gray-400">
-          <div className="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
+        <div className="bg-gray-200 h-screen">
+          <div className="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8 flex justify-center">
             <Routes>
               <Route path="/" element={<Layout />}>
                 {/* public routes */}

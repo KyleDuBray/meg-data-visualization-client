@@ -32,94 +32,93 @@ const RegistrationForm = () => {
   const required = (value) => (value ? undefined : "Required");
 
   return (
-    <Form
-      onSubmit={onSubmit}
-      render={({ handleSubmit, form, submitting, pristine, values }) => (
-        <form onSubmit={handleSubmit} className="h-screen">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-            Register
-          </h1>
-          <div>
-            <label className={LABELSTYLES}>First Name</label>
-            <Field
-              name="firstName"
-              component="input"
-              placeholder="First Name"
-              validate={required}
-              className={FIELDSTYLES}
-            />
-          </div>
+    <div className="max-w-lg basis-full mt-10">
+      <Form
+        onSubmit={onSubmit}
+        render={({ handleSubmit, form, submitting, pristine, values }) => (
+          <form onSubmit={handleSubmit}>
+            <h1 className="text-center text-3xl font-bold tracking-tight text-gray-900 mb-4">
+              Register new account
+            </h1>
+            <div className="bg-white pt-2 px-8 pb-4 rounded">
+              <label className={LABELSTYLES}>First Name</label>
+              <Field
+                name="firstName"
+                component="input"
+                placeholder="First Name"
+                validate={required}
+                className={FIELDSTYLES}
+              />
+              <label className={LABELSTYLES}>Last Name</label>
+              <Field
+                name="lastName"
+                component="input"
+                placeholder="Last Name"
+                validate={required}
+                className={FIELDSTYLES}
+              />
 
-          <div>
-            <label className={LABELSTYLES}>Last Name</label>
-            <Field
-              name="lastName"
-              component="input"
-              placeholder="Last Name"
-              validate={required}
-              className={FIELDSTYLES}
-            />
-          </div>
+              <div>
+                <label className={LABELSTYLES}>Organization</label>
+                <Field
+                  name="organization"
+                  component="input"
+                  placeholder="Organization"
+                  className={FIELDSTYLES}
+                />
+              </div>
 
-          <div>
-            <label className={LABELSTYLES}>Organization</label>
-            <Field
-              name="organization"
-              component="input"
-              placeholder="Organization"
-              className={FIELDSTYLES}
-            />
-          </div>
+              <div>
+                <label className={LABELSTYLES}>Email</label>
+                <Field
+                  name="email"
+                  component="input"
+                  placeholder="Email"
+                  validate={required}
+                  className={FIELDSTYLES}
+                />
+              </div>
 
-          <div>
-            <label className={LABELSTYLES}>Email</label>
-            <Field
-              name="email"
-              component="input"
-              placeholder="Email"
-              validate={required}
-              className={FIELDSTYLES}
-            />
-          </div>
+              <div>
+                <label className={LABELSTYLES}>Password</label>
+                <Field
+                  name="password"
+                  component="input"
+                  type="password"
+                  placeholder="Password"
+                  validate={required}
+                  className={FIELDSTYLES}
+                />
+              </div>
 
-          <div>
-            <label className={LABELSTYLES}>Password</label>
-            <Field
-              name="password"
-              component="input"
-              type="password"
-              placeholder="Password"
-              validate={required}
-              className={FIELDSTYLES}
-            />
-          </div>
+              <div>
+                <label className={LABELSTYLES}> Confirm Password</label>
+                <Field
+                  name="confirmPassword"
+                  component="input"
+                  type="password"
+                  placeholder="Confirm Password"
+                  validate={required}
+                  className={FIELDSTYLES}
+                />
+              </div>
+              <div className="flex items-center mt-5">
+                <button
+                  type="submit"
+                  className="basis-8/12 text-white bg-gray-800 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+                >
+                  Submit
+                </button>
 
-          <div>
-            <label className={LABELSTYLES}> Confirm Password</label>
-            <Field
-              name="confirmPassword"
-              component="input"
-              type="password"
-              placeholder="Confirm Password"
-              validate={required}
-              className={FIELDSTYLES}
-            />
-          </div>
-          <div className="flex items-center mt-5">
-            <button
-              type="submit"
-              className="text-white bg-gray-800 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
-            >
-              Submit
-            </button>
-
-            <div className="ml-5">
-              <Link to="/login">Already have an account?</Link>
+                <div className="ml-5">
+                  <Link to="/login">Already have an account?</Link>
+                </div>
+              </div>
             </div>
-          </div>
-        </form>
-      )}
-    />
+          </form>
+        )}
+      />
+    </div>
   );
 };
 
