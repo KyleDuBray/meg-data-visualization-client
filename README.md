@@ -8,7 +8,7 @@ Project for Database Management Systems focused on magnetoencephalography (MEG) 
 
 `cd` into both the [client](/client) and [server](/server) folders and run `npm i` in each directory to install all npm packages for both the client and server.
 
-Add a `.env` file to the root of the project and add the following keys:
+Add a `.env` file in the [server](/server) and add the following keys:
 
 ```sh
 HOST
