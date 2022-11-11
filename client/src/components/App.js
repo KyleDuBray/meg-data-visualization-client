@@ -36,8 +36,8 @@ function App() {
     <>
       <Router>
         <Navbar />
-        <div className="bg-gray-200 h-screen">
-          <div className="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8 flex justify-center">
+        <div className="bg-gray-200 h-screen flex justify-center">
+          <div className="h-screen w-full flex justify-center">
             <Routes>
               <Route path="/" element={<Layout />}>
                 {/* public routes */}
