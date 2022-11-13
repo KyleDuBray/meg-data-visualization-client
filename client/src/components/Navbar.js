@@ -1,23 +1,25 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../slices/authSlice";
 import useMenuToggler from "../hooks/useMenuToggler";
+import { AiOutlineMenuUnfold } from "react-icons/ai";
 
 const Navbar = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.auth.user);
 
-  const [toggleMenu, setToggleMenu] = useState(false);
-
   const wrapperRef = useRef(null);
   const [isOpen, setIsOpen] = useMenuToggler(wrapperRef);
+
+  const sidebarWrapperRef = useRef(null);
+  const [sidebarIsOpen, setSidebarIsOpen] = useMenuToggler(sidebarWrapperRef);
 
   return (
     <div className="min-h-full">
       <nav className="bg-gray-800">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center">
               <div className="flex-shrink-0">
@@ -32,10 +34,54 @@ const Navbar = () => {
               </div>
               {/* <-- Main Nav Links --> */}
               <div>
-                <ul className="ml-10 flex items-baseline space-x-4">
+                <ul className="ml-10 flex items-end space-x-4">
                   {/*<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                    NEED TO ADD LINKS HERE with styling:
                    className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"*/}
+                  <button
+                    onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
+                    ref={sidebarWrapperRef}
+                    type="button"
+                    className={`md:invisible ${!user ? "invisible" : ""}`}
+                  >
+                    <AiOutlineMenuUnfold className="text-white w-6 h-6" />
+                  </button>
+
+                  <div
+                    className={`${
+                      !sidebarIsOpen ? "opacity-0" : ""
+                    } md:invisible bg-gray-800 absolute left-0 top-16 z-10 mt-2 w-48 origin-top-right rounded-md py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="user-menu-button"
+                    tabIndex="-1"
+                  >
+                    {/* MOBILE SIDEBAR LINKS */}
+
+                    <>
+                      <Link
+                        to="/"
+                        className="block px-4 py-2 text-sm text-white hover:text-gray-800 hover:bg-gray-200"
+                        role="menuitem"
+                        tabIndex="-1"
+                        id="user-menu-item-0"
+                      >
+                        Projects
+                      </Link>
+                    </>
+
+                    <>
+                      <Link
+                        to="/"
+                        className="block px-4 py-2 text-sm text-white hover:text-gray-800 hover:bg-gray-200"
+                        role="menuitem"
+                        tabIndex="-1"
+                        id="user-menu-item-0"
+                      >
+                        Data
+                      </Link>
+                    </>
+                  </div>
 
                   <li className=" text-gray-300 hover:bg-gray-700 hover:text-white font-medium">
                     <Link to="/">Home</Link>
