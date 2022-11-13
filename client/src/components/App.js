@@ -13,6 +13,8 @@ import LoginForm from "./forms/LoginForm";
 import RegistrationForm from "./forms/RegistrationForm";
 import { AuthOutlet } from "../utilities/AuthOutlet";
 import Layout from "./Layout";
+import Project from "./projects";
+import Data from "./data";
 
 function App() {
   const dispatch = useDispatch();
@@ -47,7 +49,7 @@ function App() {
 
                 {/* protected routes */}
                 <Route element={<AuthOutlet />}>
-                  <Route path="dashboard" element={<Dashboard />} />
+                  <Route path="/dashboard/*" element={<Dashboard />}></Route>
                 </Route>
               </Route>
             </Routes>
