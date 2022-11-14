@@ -46,11 +46,11 @@ function App() {
                 <Route index element={<Public />} />
                 <Route path="login" element={<LoginForm />}></Route>
                 <Route path="register" element={<RegistrationForm />}></Route>
+              </Route>
 
-                {/* protected routes */}
-                <Route element={<AuthOutlet />}>
-                  <Route path="/dashboard/*" element={<Dashboard />}></Route>
-                </Route>
+              {/* protected routes */}
+              <Route element={<AuthOutlet />}>
+                <Route path="/dashboard/*" element={<Dashboard />}></Route>
               </Route>
             </Routes>
           </div>
