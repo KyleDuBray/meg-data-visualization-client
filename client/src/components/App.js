@@ -15,6 +15,8 @@ import { AuthOutlet } from "../utilities/AuthOutlet";
 import Layout from "./Layout";
 import Project from "./projects";
 import Data from "./data";
+import About from "./About";
+import Contact from "./Contact";
 
 function App() {
   const dispatch = useDispatch();
@@ -46,6 +48,8 @@ function App() {
                 <Route index element={<Public />} />
                 <Route path="login" element={<LoginForm />}></Route>
                 <Route path="register" element={<RegistrationForm />}></Route>
+                <Route path="about" element={<About />}></Route>
+                <Route path="contact" element={<Contact />}></Route>
               </Route>
 
               {/* protected routes */}
