@@ -1,25 +1,20 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Outlet, Routes, Route } from "react-router-dom";
-import Sidebar from "./Sidebar";
-import Data from "./data";
-import Project from "./projects";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Outlet, Routes, Route } from 'react-router-dom';
+import Sidebar from './Sidebar';
+import Data from './data';
+import Project from './projects';
 
 const Dashboard = () => {
   const user = useSelector((state) => state.auth.user);
 
   return (
     <>
-      {/* <h1 className="text-3xl font-bold tracking-tight text-gray-900 min-w-full">
-        Dashboard
-      </h1> */}
-
       <div className="w-full h-3/4 flex justify-center">
-        <div className="invisible md:visible bg-gray-800 md:w-1/4 h-full rounded-bl-lg">
+        <div className="invisible md:visible bg-gray-800  h-full rounded-bl-lg">
           <Sidebar />
         </div>
-        <div className="w-full bg-white h-full md:w-3/4 rounded-br-lg">
-          {/*TODO: fix nested routing here so component rendered will depend on URL */}
+        <div className="w-full bg-white h-full  rounded-br-lg">
           <Routes>
             <Route path="projects" element={<Project />}></Route>
             <Route path="data" element={<Data />}></Route>

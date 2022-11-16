@@ -19,7 +19,7 @@ const Sidebar = () => {
             : ''
         } flex justify-center my-2 w-full`}
       >
-        <div className="flex text-gray-300 hover:bg-gray-700 hover:text-white font-medium text-center md:mx-8 lg:mx-16 xl:mx-24 rounded">
+        <div className="flex text-gray-300 hover:bg-gray-700 hover:text-white font-medium text-center md:mx-8 rounded">
           <HiOutlineLightBulb className="text-white h-6 w-6 mr-2" />
           <Link to="/dashboard/projects">Projects</Link>
         </div>
@@ -32,7 +32,7 @@ const Sidebar = () => {
             : ''
         } flex justify-center my-2 w-full`}
       >
-        <div className="flex text-gray-300 hover:bg-gray-700 hover:text-white font-medium text-center md:mx-8 lg:mx-16 xl:mx-24 rounded">
+        <div className="flex text-gray-300 hover:bg-gray-700 hover:text-white font-medium text-center md:mx-8 rounded">
           <CiWavePulse1 className="text-white h-6 w-6 mr-2" />
           <Link to="/dashboard/data">Data</Link>
         </div>
