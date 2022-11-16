@@ -5,6 +5,8 @@ import cors from "cors";
 
 import usersRouter from "../routes/api/users.js";
 import authRouter from "../routes/api/auth.js";
+import projectsRouter from "../routes/api/projects.js";
+import eventsRouter from "../routes/api/events.js";
 
 const app = express();
 app.use(express.json());
@@ -19,6 +21,8 @@ dbConnection.connect((error) => {
 
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/projects", projectsRouter);
+app.use("/api/events", eventsRouter);
 
 const expressServer = app.listen(5000, () => {
   console.log("Listening on port 5000");
