@@ -1,7 +1,7 @@
 import React from "react";
 
-const Data = () => {
-  return <div>Data</div>;
+const EventData = () => {
+  return <div>Event Data</div>;
 };
 
-export default Data;
+export default EventData;

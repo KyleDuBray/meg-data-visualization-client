@@ -4,21 +4,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../slices/authSlice";
 import useMenuToggler from "../hooks/useMenuToggler";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
+import { FiLogOut } from "react-icons/fi";
+import { IoNotificationsOutline } from "react-icons/io5";
 
 const Navbar = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.auth.user);
 
-  const wrapperRef = useRef(null);
-  const [isOpen, setIsOpen] = useMenuToggler(wrapperRef);
+  const notificationWrapperRef = useRef(null);
+  const [NotificationOpen, setNotificationOpen] = useMenuToggler(
+    notificationWrapperRef
+  );
 
   const sidebarWrapperRef = useRef(null);
   const [sidebarIsOpen, setSidebarIsOpen] = useMenuToggler(sidebarWrapperRef);
 
   return (
     <div className="min-h-full">
-      <nav className="bg-gray-800">
+      <nav className="bg-gray-700">
         <div className="mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center">
@@ -35,16 +39,13 @@ const Navbar = () => {
               {/* <-- Main Nav Links --> */}
               <div>
                 <ul className="ml-10 flex items-end space-x-4">
-                  {/*<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                   NEED TO ADD LINKS HERE with styling:
-                   className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"*/}
                   <button
                     onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
                     ref={sidebarWrapperRef}
                     type="button"
                     className={`md:invisible ${!user ? "invisible" : ""}`}
                   >
-                    <AiOutlineMenuUnfold className="text-white w-6 h-6" />
+                    <AiOutlineMenuUnfold className="text-white w-6 h-6 md:w-0" />
                   </button>
 
                   <div
@@ -57,7 +58,6 @@ const Navbar = () => {
                     tabIndex="-1"
                   >
                     {/* MOBILE SIDEBAR LINKS */}
-
                     <>
                       <Link
                         to="/"
@@ -82,131 +82,59 @@ const Navbar = () => {
                       </Link>
                     </>
                   </div>
-
-                  <li className=" text-gray-300 hover:bg-gray-700 hover:text-white font-medium">
-                    <Link to="/">Home</Link>
-                  </li>
-                  <li className="text-gray-300 hover:bg-gray-700 hover:text-white font-medium">
+                  <li
+                    className={`${
+                      user ? "invisible" : ""
+                    } text-gray-300 hover:bg-gray-700 hover:text-white font-medium`}
+                  >
                     <Link to="/about">About</Link>
                   </li>
-                  <li className="text-gray-300 hover:bg-gray-700 hover:text-white font-medium">
+                  <li
+                    className={`${
+                      user ? "invisible" : ""
+                    } text-gray-300 hover:bg-gray-700 hover:text-white font-medium`}
+                  >
                     <Link to="/contact">Contact</Link>
                   </li>
                 </ul>
               </div>
             </div>
-            {/*<!-- Profile and Notifications -->*/}
+            {/*<!-- Notifications and Logout -->*/}
             <div>
-              <div className="ml-4 flex items-center md:ml-6">
+              <div
+                className={`${
+                  !user ? "invisible" : ""
+                } ml-4 flex items-center md:ml-6`}
+              >
+                {/*<!-- Notifications dropdown -->*/}
                 <button
                   type="button"
-                  className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  onClick={() => setNotificationOpen(!NotificationOpen)}
+                  ref={notificationWrapperRef}
+                  className="rounded-full p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                 >
                   <span className="sr-only">View notifications</span>
-                  {/*<!-- Heroicon name: outline/bell -->*/}
-                  <svg
-                    className="h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
-                    />
-                  </svg>
+                  <IoNotificationsOutline className="text-gray-300 w-6 h-6" />
                 </button>
+                <div
+                  className={`${
+                    !NotificationOpen ? "opacity-0" : ""
+                  } absolute right-0 top-14 z-10 mt-2 w-full md:w-64 origin-top-right rounded-md bg-gray-800 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="user-menu-button"
+                  tabIndex="-1"
+                ></div>
 
-                {/*<!-- Profile dropdown -->*/}
+                {/*<!-- Logout -->*/}
                 <div className="relative ml-3">
-                  <div>
-                    <button
-                      ref={wrapperRef}
-                      type="button"
-                      onClick={() => setIsOpen(!isOpen)}
-                      className="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                      id="user-menu-button"
-                      aria-expanded="false"
-                      aria-haspopup="true"
-                    >
-                      <img className="h-8 w-8" src="./icons/menu.png" alt="" />
-                      {/*<!-- PROFILE IMAGE
-                      <span className="sr-only">Open user menu</span>
-                      
-                      <img
-                        className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                      />
-                      -->*/}
-                    </button>
-                  </div>
-
-                  {/*<!--
-                Dropdown menu, show/hide based on menu state.
-
-                Entering: "transition ease-out duration-100"
-                  From: "transform opacity-0 scale-95"
-                  To: "transform opacity-100 scale-100"
-                Leaving: "transition ease-in duration-75"
-                  From: "transform opacity-100 scale-100"
-                  To: "transform opacity-0 scale-95"
-              -->*/}
-                  <div
-                    className={`${
-                      !isOpen ? "opacity-0" : ""
-                    } absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
-                    role="menu"
-                    aria-orientation="vertical"
-                    aria-labelledby="user-menu-button"
-                    tabIndex="-1"
+                  <button
+                    className="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-200 hover:text-black w-full text-left"
+                    onClick={() => dispatch(logout())}
                   >
-                    {/* DROPDOWN LINKS */}
-                    {user ? (
-                      <>
-                        <Link
-                          to="/"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
-                          role="menuitem"
-                          tabIndex="-1"
-                          id="user-menu-item-0"
-                        >
-                          Your Profile
-                        </Link>
-                        <button
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 w-full text-left"
-                          onClick={() => dispatch(logout())}
-                        >
-                          Log out
-                        </button>
-                      </>
-                    ) : (
-                      <>
-                        <Link
-                          to="/login"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
-                          role="menuitem"
-                          tabIndex="-1"
-                          id="user-menu-item-0"
-                        >
-                          Login
-                        </Link>
-                        <Link
-                          to="/register"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
-                          role="menuitem"
-                          tabIndex="-1"
-                          id="user-menu-item-0"
-                        >
-                          Register
-                        </Link>
-                      </>
-                    )}
-                  </div>
+                    Logout
+                    <FiLogOut className="h-6 w-6 ml-2" />
+                  </button>
                 </div>
               </div>
             </div>
