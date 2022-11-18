@@ -126,3 +126,22 @@ COLLATE = utf8mb4_0900_ai_ci;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- STORED PROCEDURE TO ADD USER TO PROJECT &
+-- CREATE NOTIFICATION
+-- -----------------------------------------------------
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `add_user_to_project`(
+IN proj_id INT,
+IN u_id INT,
+IN admin_status TINYINT,
+IN not_message VARCHAR(240)
+)
+BEGIN
+INSERT INTO works_on(project_id, user_id, is_admin)
+VALUES(proj_id, u_id, admin_status);
+
+INSERT INTO notification(user_id, message, `read`)
+VALUES(u_id, not_message, 0 );
+END
