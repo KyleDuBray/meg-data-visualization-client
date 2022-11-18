@@ -13,8 +13,8 @@ export const notificationApi = createApi({
   }),
   endpoints: (builder) => ({
     getNotifications: builder.mutation({
-      query: () => ({
-        url: "notifications",
+      query: (id) => ({
+        url: `notifications/${id}`,
         method: "GET",
       }),
     }),

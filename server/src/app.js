@@ -7,6 +7,7 @@ import usersRouter from "../routes/api/users.js";
 import authRouter from "../routes/api/auth.js";
 import projectsRouter from "../routes/api/projects.js";
 import eventsRouter from "../routes/api/events.js";
+import notificationsRouter from "../routes/api/notifications.js";
 
 const app = express();
 app.use(express.json());
@@ -23,6 +24,7 @@ app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/projects", projectsRouter);
 app.use("/api/events", eventsRouter);
+app.use("/api/notifications", notificationsRouter);
 
 const expressServer = app.listen(5000, () => {
   console.log("Listening on port 5000");

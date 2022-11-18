@@ -13,8 +13,8 @@ export const projectApi = createApi({
   }),
   endpoints: (builder) => ({
     getProjects: builder.mutation({
-      query: () => ({
-        url: "projects",
+      query: (id) => ({
+        url: `projects/${id}`,
         method: "GET",
       }),
     }),
