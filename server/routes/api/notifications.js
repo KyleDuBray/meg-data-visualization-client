@@ -7,10 +7,10 @@ const notificationsRouter = express.Router();
 // @route    GET api/notifications/:id
 // @desc     Get notifications for specific user
 // @access   PRIVATE
-notificationsRouter.get("/:id", auth, async (req, res) => {
+notificationsRouter.get("/", auth, async (req, res) => {
   try {
     const query = `SELECT * FROM notification WHERE user_id = ?`;
-    const valuesArr = [req.params.id];
+    const valuesArr = [req.user.id];
     dbConnection.query(query, valuesArr, async (err, results) => {
       if (results) {
         console.log(results);
@@ -25,6 +25,7 @@ notificationsRouter.get("/:id", auth, async (req, res) => {
 });
 
 // TODO: POST /api/notifications route
+// to create new notification
 //              OR
 // Stored procedure that automatically creates
 // notification on being added to project?

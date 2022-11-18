@@ -8,10 +8,10 @@ const projectsRouter = express.Router();
 // @desc     Get projects for specific user
 // @access   PRIVATE
 
-projectsRouter.get("/:id", auth, async (req, res) => {
+projectsRouter.get("/", auth, async (req, res) => {
   try {
     const query = `INSERT INTO project(project_name) VALUES(?)`;
-    const valuesArr = [req.params.id];
+    const valuesArr = [req.user.id];
     dbConnection.query(query, valuesArr, async (err, results) => {
       if (results) {
         console.log(results);
