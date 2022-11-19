@@ -17,5 +17,9 @@ export const store = configureStore({
   },
 
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authApi.middleware),
+    getDefaultMiddleware().concat([
+      authApi.middleware,
+      notificationApi.middleware,
+      projectApi.middleware,
+    ]),
 });

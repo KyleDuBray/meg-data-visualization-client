@@ -11,7 +11,7 @@ const Dashboard = () => {
         <div className="invisible md:visible bg-gray-800  h-full rounded-bl-lg">
           <Sidebar />
         </div>
-        <div className="w-full bg-white h-full  rounded-br-lg">
+        <div className="w-full bg-gray-500 h-full  rounded-br-lg">
           <Routes>
             <Route path="projects" element={<Project />}></Route>
             <Route path="data" element={<EventData />}></Route>

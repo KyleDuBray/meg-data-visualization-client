@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../slices/authSlice";
@@ -6,6 +6,9 @@ import useMenuToggler from "../hooks/useMenuToggler";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
 import { IoNotificationsOutline } from "react-icons/io5";
+
+import { useGetNotificationsMutation } from "../slices/notificationApi";
+import { setNotifications } from "../slices/notificationSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -19,6 +22,26 @@ const Navbar = () => {
 
   const sidebarWrapperRef = useRef(null);
   const [sidebarIsOpen, setSidebarIsOpen] = useMenuToggler(sidebarWrapperRef);
+
+  const [getNotifications, isLoading] = useGetNotificationsMutation();
+
+  const [isUnreads, setIsUnreads] = useState(false);
+
+  useEffect(() => {
+    const getGetNotificationsFunc = async () => {
+      try {
+        const res = await getNotifications();
+        console.log(res);
+        //dispatch(setNotifications(res.data));
+        res.data.forEach((item) => {
+          if (item.read === 0) setIsUnreads(true);
+        });
+      } catch {
+        console.log("Error fetching notifications");
+      }
+    };
+    getGetNotificationsFunc();
+  }, [getNotifications]);
 
   return (
     <div className="min-h-full">
@@ -109,13 +132,23 @@ const Navbar = () => {
                 {/*<!-- Notifications dropdown -->*/}
                 <button
                   type="button"
-                  onClick={() => setNotificationOpen(!NotificationOpen)}
+                  onClick={() => {
+                    setNotificationOpen(!NotificationOpen);
+                    //TODO: Create backend method for setting status of notifications to "read"
+                    setIsUnreads(false);
+                  }}
                   ref={notificationWrapperRef}
-                  className="rounded-full p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  className="relative rounded-full p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                 >
                   <span className="sr-only">View notifications</span>
                   <IoNotificationsOutline className="text-gray-300 w-6 h-6" />
+                  <span
+                    class={`${
+                      !isUnreads ? "invisible" : ""
+                    }w-[10px] h-[10px] absolute -right-0.5 top-7  rounded-full bg-red-800`}
+                  />
                 </button>
+
                 <div
                   className={`${
                     !NotificationOpen ? "opacity-0" : ""

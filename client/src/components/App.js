@@ -13,8 +13,6 @@ import LoginForm from "./forms/LoginForm";
 import RegistrationForm from "./forms/RegistrationForm";
 import { AuthOutlet } from "../utilities/AuthOutlet";
 import Layout from "./Layout";
-import Project from "./projects";
-import Data from "./data";
 import About from "./About";
 import Contact from "./Contact";
 
