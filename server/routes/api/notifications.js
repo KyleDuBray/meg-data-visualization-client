@@ -24,10 +24,4 @@ notificationsRouter.get("/", auth, async (req, res) => {
   }
 });
 
-// TODO: POST /api/notifications route
-// to create new notification
-//              OR
-// Stored procedure that automatically creates
-// notification on being added to project?
-
 export default notificationsRouter;

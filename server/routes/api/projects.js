@@ -27,6 +27,9 @@ projectsRouter.get("/", auth, async (req, res) => {
 
 // @route    POST api/projects
 // @desc     Create new project
+//           uses stored procedure
+//           add_user_to_project
+//           (project_id, user_id, is_admin, message)
 // @access   PRIVATE
 
 // TODO: Need to query or call stored procedure to
@@ -35,16 +38,43 @@ projectsRouter.get("/", auth, async (req, res) => {
 // will need separate route for just adding new users
 // to a project
 projectsRouter.post("/", auth, async (req, res) => {
-  const { name } = req.body;
+  const { project_id, user_id, isAdmin } = req.body;
   try {
-    const query = `INSERT INTO project(project_name) VALUES(?)`;
-    const valuesArr = [name];
+    // First query to see if user who made request is authorized to add another user to project
+    const query =
+      "SELECT project_name, p.project_id, is_admin FROM project AS p JOIN works_on as W ON p.project_id = w.project_id WHERE p.project_id = ? AND w.user_id = ?";
+    const valuesArr = [project_id, req.user.id];
     dbConnection.query(query, valuesArr, async (err, results) => {
-      if (results) {
-        console.log(results);
-        return res.status(201).json(results);
-      } else
+      console.log(results);
+      if (!results || results.length === 0) {
         return res.status(400).send("Bad Request- a record was not created");
+      }
+      if (results[0].is_admin === 0) {
+        return res.status(401).send("Unauthorized- a record was not created.");
+      }
+      try {
+        // If project exists and request user is admin, call stored procedure to add new
+        // user to project and create notification for them
+        const query2 = "CALL add_user_to_project(?, ?, ?, ?)";
+        const valuesArr2 = [
+          project_id,
+          user_id,
+          isAdmin,
+          `You have been added to the ${results[0].project_name} project.`,
+        ];
+        dbConnection.query(query2, valuesArr2, (err2, results2) => {
+          console.log(results2);
+          if (!results2 || results2.length == 0) {
+            return res
+              .status(400)
+              .send("Bad Request- a record was not created");
+          }
+          return res.status(201).json(results2);
+        });
+      } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Server Error");
+      }
     });
   } catch (err) {
     console.log(err.message);
