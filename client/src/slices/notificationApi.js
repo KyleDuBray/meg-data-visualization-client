@@ -18,7 +18,14 @@ export const notificationApi = createApi({
         method: "GET",
       }),
     }),
+    setNotificationsRead: builder.mutation({
+      query: () => ({
+        url: `notifications`,
+        method: "PATCH",
+      }),
+    }),
   }),
 });
 
-export const { useGetNotificationsMutation } = notificationApi;
+export const { useGetNotificationsMutation, useSetNotificationsReadMutation } =
+  notificationApi;

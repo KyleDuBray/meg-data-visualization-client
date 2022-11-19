@@ -7,13 +7,20 @@ import { AiOutlineMenuUnfold } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
 import { IoNotificationsOutline } from "react-icons/io5";
 
-import { useGetNotificationsMutation } from "../slices/notificationApi";
+import {
+  useGetNotificationsMutation,
+  useSetNotificationsReadMutation,
+} from "../slices/notificationApi";
 import { setNotifications } from "../slices/notificationSlice";
+import NotificationItem from "./notifications/NotificationItem";
 
 const Navbar = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.auth.user);
+  const notifications = useSelector(
+    (state) => state.notification.notifications
+  );
 
   const notificationWrapperRef = useRef(null);
   const [NotificationOpen, setNotificationOpen] = useMenuToggler(
@@ -27,12 +34,14 @@ const Navbar = () => {
 
   const [isUnreads, setIsUnreads] = useState(false);
 
+  const [setNotificationsRead] = useSetNotificationsReadMutation();
+
   useEffect(() => {
     const getGetNotificationsFunc = async () => {
       try {
         const res = await getNotifications();
         console.log(res);
-        //dispatch(setNotifications(res.data));
+        dispatch(setNotifications(res.data));
         res.data.forEach((item) => {
           if (item.read === 0) setIsUnreads(true);
         });
@@ -41,7 +50,16 @@ const Navbar = () => {
       }
     };
     getGetNotificationsFunc();
-  }, [getNotifications]);
+  }, [getNotifications, user]);
+
+  const setNotificationsReadOnSidebarOpen = async () => {
+    setNotificationOpen(!NotificationOpen);
+
+    if (isUnreads) {
+      setIsUnreads(false);
+      await setNotificationsRead();
+    }
+  };
 
   return (
     <div className="min-h-full">
@@ -132,18 +150,14 @@ const Navbar = () => {
                 {/*<!-- Notifications dropdown -->*/}
                 <button
                   type="button"
-                  onClick={() => {
-                    setNotificationOpen(!NotificationOpen);
-                    //TODO: Create backend method for setting status of notifications to "read"
-                    setIsUnreads(false);
-                  }}
+                  onClick={() => setNotificationsReadOnSidebarOpen()}
                   ref={notificationWrapperRef}
                   className="relative rounded-full p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                 >
                   <span className="sr-only">View notifications</span>
                   <IoNotificationsOutline className="text-gray-300 w-6 h-6" />
                   <span
-                    class={`${
+                    className={`${
                       !isUnreads ? "invisible" : ""
                     }w-[10px] h-[10px] absolute -right-0.5 top-7  rounded-full bg-red-800`}
                   />
@@ -156,8 +170,11 @@ const Navbar = () => {
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="user-menu-button"
-                  tabIndex="-1"
-                ></div>
+                >
+                  {notifications?.map((item, index) => (
+                    <NotificationItem message={item.message} key={index} />
+                  ))}
+                </div>
 
                 {/*<!-- Logout -->*/}
                 <div className="relative ml-3">
