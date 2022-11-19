@@ -60,7 +60,7 @@ const Navbar = () => {
                     {/* MOBILE SIDEBAR LINKS */}
                     <>
                       <Link
-                        to="/"
+                        to="/dashboard/projects"
                         className="block px-4 py-2 text-sm text-white hover:text-gray-800 hover:bg-gray-200"
                         role="menuitem"
                         tabIndex="-1"
@@ -72,7 +72,7 @@ const Navbar = () => {
 
                     <>
                       <Link
-                        to="/"
+                        to="/dashboard/data"
                         className="block px-4 py-2 text-sm text-white hover:text-gray-800 hover:bg-gray-200"
                         role="menuitem"
                         tabIndex="-1"
