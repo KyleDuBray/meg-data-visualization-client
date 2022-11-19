@@ -27,17 +27,49 @@ projectsRouter.get("/", auth, async (req, res) => {
 
 // @route    POST api/projects
 // @desc     Create new project
+// @access   PRIVATE
+projectsRouter.post("/", auth, async (req, res) => {
+  const { project_name } = req.body;
+  try {
+    const query = "INSERT INTO project(project_name) VALUES(?)";
+    const valuesArr = [project_name];
+    dbConnection.query(query, valuesArr, (err, results) => {
+      console.log(results);
+      if (!results) {
+        return res.status(400).send("Bad Request- a record was not created");
+      }
+      try {
+        const query2 =
+          "INSERT INTO works_on(project_id, user_id, is_admin) VALUES(?, ?, ?)";
+        const valuesArr2 = [results.insertId, req.user.id, 1];
+        dbConnection.query(query2, valuesArr2, (err2, results2) => {
+          console.log(results2);
+          if (!results2) {
+            return res
+              .status(400)
+              .send("Bad Request- a record was not created");
+          }
+          return res.status(201).json(results2);
+        });
+      } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Server Error");
+      }
+    });
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route    POST api/projects/add-user
+// @desc     Add user to project
 //           uses stored procedure
 //           add_user_to_project
 //           (project_id, user_id, is_admin, message)
 // @access   PRIVATE
 
-// TODO: Need to query or call stored procedure to
-// insert in the project table and the
-// works_on table with user_id as admin -
-// will need separate route for just adding new users
-// to a project
-projectsRouter.post("/", auth, async (req, res) => {
+projectsRouter.post("/add-user", auth, async (req, res) => {
   const { project_id, user_id, isAdmin } = req.body;
   try {
     // First query to see if user who made request is authorized to add another user to project
