@@ -129,11 +129,11 @@ IN proj_id INT,
 IN u_id INT,
 IN admin_status TINYINT,
 IN not_message VARCHAR(240)
-)
+)//
 BEGIN
 INSERT INTO works_on(project_id, user_id, is_admin)
-VALUES(proj_id, u_id, admin_status);
+VALUES(proj_id, u_id, admin_status)//
 
 INSERT INTO notification(user_id, message, `read`)
-VALUES(u_id, not_message, 0 );
+VALUES(u_id, not_message, 0 )//
 END
