@@ -1,18 +1,18 @@
-import React, { useRef, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../slices/authSlice";
-import useMenuToggler from "../hooks/useMenuToggler";
-import { AiOutlineMenuUnfold } from "react-icons/ai";
-import { FiLogOut } from "react-icons/fi";
-import { IoNotificationsOutline } from "react-icons/io5";
+import React, { useRef, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../slices/authSlice';
+import useMenuToggler from '../hooks/useMenuToggler';
+import { AiOutlineMenuUnfold } from 'react-icons/ai';
+import { FiLogOut } from 'react-icons/fi';
+import { IoNotificationsOutline } from 'react-icons/io5';
 
 import {
   useGetNotificationsMutation,
   useSetNotificationsReadMutation,
-} from "../slices/notificationApi";
-import { setNotifications } from "../slices/notificationSlice";
-import NotificationItem from "./notifications/NotificationItem";
+} from '../slices/notificationApi';
+import { setNotifications } from '../slices/notificationSlice';
+import NotificationItem from './notifications/NotificationItem';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -46,10 +46,12 @@ const Navbar = () => {
           if (item.read === 0) setIsUnreads(true);
         });
       } catch {
-        console.log("Error fetching notifications");
+        console.log('Error fetching notifications');
       }
     };
-    getGetNotificationsFunc();
+    if (user) {
+      getGetNotificationsFunc();
+    }
   }, [getNotifications, user]);
 
   const setNotificationsReadOnSidebarOpen = async () => {
@@ -84,14 +86,14 @@ const Navbar = () => {
                     onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
                     ref={sidebarWrapperRef}
                     type="button"
-                    className={`md:invisible ${!user ? "invisible" : ""}`}
+                    className={`md:invisible ${!user ? 'invisible' : ''}`}
                   >
                     <AiOutlineMenuUnfold className="text-white w-6 h-6 md:w-0" />
                   </button>
 
                   <div
                     className={`${
-                      !sidebarIsOpen ? "opacity-0" : ""
+                      !sidebarIsOpen ? 'opacity-0' : ''
                     } md:invisible bg-gray-800 absolute left-0 top-16 z-10 mt-2 w-48 origin-top-right rounded-md py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
                     role="menu"
                     aria-orientation="vertical"
@@ -125,14 +127,14 @@ const Navbar = () => {
                   </div>
                   <li
                     className={`${
-                      user ? "invisible" : ""
+                      user ? 'invisible' : ''
                     } text-gray-300 hover:bg-gray-700 hover:text-white font-medium`}
                   >
                     <Link to="/about">About</Link>
                   </li>
                   <li
                     className={`${
-                      user ? "invisible" : ""
+                      user ? 'invisible' : ''
                     } text-gray-300 hover:bg-gray-700 hover:text-white font-medium`}
                   >
                     <Link to="/contact">Contact</Link>
@@ -144,7 +146,7 @@ const Navbar = () => {
             <div>
               <div
                 className={`${
-                  !user ? "invisible" : ""
+                  !user ? 'invisible' : ''
                 } ml-4 flex items-center md:ml-6`}
               >
                 {/*<!-- Notifications dropdown -->*/}
@@ -158,14 +160,14 @@ const Navbar = () => {
                   <IoNotificationsOutline className="text-gray-300 w-6 h-6" />
                   <span
                     className={`${
-                      !isUnreads ? "invisible" : ""
+                      !isUnreads ? 'invisible' : ''
                     }w-[10px] h-[10px] absolute -right-0.5 top-7  rounded-full bg-red-800`}
                   />
                 </button>
 
                 <div
                   className={`${
-                    !NotificationOpen ? "opacity-0" : ""
+                    !NotificationOpen ? 'opacity-0' : ''
                   } absolute right-0 top-14 z-10 mt-2 w-full md:w-64 origin-top-right rounded-md bg-gray-800 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
                   role="menu"
                   aria-orientation="vertical"
