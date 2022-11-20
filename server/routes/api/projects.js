@@ -38,16 +38,42 @@ projectsRouter.get("/:id", auth, async (req, res) => {
   try {
     const query = `SELECT * from project
     JOIN works_on ON works_on.project_id = project.project_id
-    WHERE user_id = 15 AND project.project_id = 4`;
-    const valuesArr = [req.user.id];
+    WHERE user_id = ? AND project.project_id = ?`;
+    const valuesArr = [req.user.id, req.params.id];
     dbConnection.query(query, valuesArr, async (err, results) => {
       if (results) {
         console.log(
-          `${results.length} records retreived for user ${req.user.id}`
+          `Project ${results[0].project_id} records retreived for user ${req.user.id}`
         );
         return res.status(200).json(results);
       } else console.log(err);
       return res.status(400).send("Bad Request- unable to retreive records");
+    });
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route    GET api/projects/users/:id
+// @desc     Get user details for specific project
+// @access   PRIVATE
+projectsRouter.get("/users/:id", auth, async (req, res) => {
+  try {
+    const query = `SELECT works_on_id, user.user_id, project_id, is_admin,
+     first_name, last_name, organization, email from works_on
+    JOIN user on user.user_id = works_on.user_id
+    WHERE project_id = ?`;
+    const valuesArr = [req.params.id];
+    dbConnection.query(query, valuesArr, async (err, results) => {
+      if (!results || results.length == 0) {
+        return res.status(400).send("Bad Request- unable to retreive records");
+      }
+      console.log(
+        `${results.length} User records retrieved for Project ${results[0].project_id}`
+      );
+
+      return res.status(200).json(results);
     });
   } catch (err) {
     console.log(err.message);

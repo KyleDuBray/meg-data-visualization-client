@@ -18,7 +18,14 @@ export const projectApi = createApi({
         method: "GET",
       }),
     }),
+    getUsersForProject: builder.mutation({
+      query: (id) => ({
+        url: `projects/users/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useGetProjectsMutation } = projectApi;
+export const { useGetProjectsMutation, useGetUsersForProjectMutation } =
+  projectApi;

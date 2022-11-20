@@ -13,10 +13,6 @@ const ProjectPage = () => {
     })[0];
   });
 
-  useEffect(() => {
-    console.log(location);
-  }, [location]);
-
   return (
     <div className="w-11/12 mx-auto mt-5 rounded bg-gray-700 flex flex-col">
       <div className="flex">
