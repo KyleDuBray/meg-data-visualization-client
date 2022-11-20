@@ -10,13 +10,17 @@ const projectsRouter = express.Router();
 
 projectsRouter.get("/", auth, async (req, res) => {
   try {
-    const query = `SELECT project.project_id,works_on.works_on_id, project_name, is_admin FROM project
-    JOIN WORKS_ON ON project.project_id = works_on.project_id
-    WHERE user_id = ?`;
+    const query = `SELECT project.project_id,works_on.works_on_id, project_name, is_admin, 
+   (SELECT COUNT(*) from works_on GROUP BY project_id HAVING project_id=project.project_id) as active_members
+   FROM project
+   JOIN WORKS_ON ON project.project_id = works_on.project_id
+   WHERE user_id = ?`;
     const valuesArr = [req.user.id];
     dbConnection.query(query, valuesArr, async (err, results) => {
       if (results) {
-        console.log(results);
+        console.log(
+          `${results.length} records retreived for user ${req.user.id}`
+        );
         return res.status(200).json(results);
       } else console.log(err);
       return res.status(400).send("Bad Request- unable to retreive records");
