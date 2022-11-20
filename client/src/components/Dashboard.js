@@ -8,7 +8,7 @@ const Dashboard = () => {
   return (
     <>
       <div className="w-full h-3/4 flex justify-center">
-        <div className="invisible md:visible bg-gray-800  h-full rounded-bl-lg">
+        <div className="hidden md:block bg-gray-800  h-full rounded-bl-lg">
           <Sidebar />
         </div>
         <div className="w-full bg-gray-500 h-full  rounded-br-lg">

@@ -93,8 +93,8 @@ const Navbar = () => {
 
                   <div
                     className={`${
-                      !sidebarIsOpen ? "opacity-0" : ""
-                    } md:invisible md:w-0 bg-gray-800 absolute left-0 top-16 z-10 mt-2 w-48 origin-top-right rounded-md py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
+                      !sidebarIsOpen ? "hidden" : ""
+                    } md:hidden bg-gray-800 absolute left-0 top-16 z-10 mt-2 w-48 origin-top-right rounded-md py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
@@ -160,14 +160,14 @@ const Navbar = () => {
                   <IoNotificationsOutline className="text-gray-300 w-6 h-6" />
                   <span
                     className={`${
-                      !isUnreads ? "invisible w-0" : ""
+                      !isUnreads ? "hidden" : ""
                     }w-[10px] h-[10px] absolute -right-0.5 top-7  rounded-full bg-red-800`}
                   />
                 </button>
 
                 <div
                   className={`${
-                    !NotificationOpen ? "opacity-0 w-0" : ""
+                    !NotificationOpen ? "hidden" : ""
                   } absolute right-0 top-14 z-10 mt-2 w-full md:w-64 origin-top-right rounded-md bg-gray-800 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
                   role="menu"
                   aria-orientation="vertical"
