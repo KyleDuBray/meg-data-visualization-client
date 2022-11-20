@@ -7,7 +7,7 @@ const ProjectItem = ({ name, activeMembers, activeEvents, isAdmin }) => {
       <td className="py-3">
         <Link className="text-gray-300 font-medium">{name}</Link>
         {isAdmin ? (
-          <span className="text-sm ml-4 rounded bg-green-200">ADMIN</span>
+          <span className="text-xs ml-4 rounded bg-green-200">ADMIN</span>
         ) : (
           ""
         )}
