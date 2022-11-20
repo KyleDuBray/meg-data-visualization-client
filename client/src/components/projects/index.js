@@ -1,7 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MdOutlineCreate } from "react-icons/md";
+import { useSelector, useDispatch } from "react-redux";
+import { useGetProjectsMutation } from "../../slices/projectApi";
+import { setProjects } from "../../slices/projectSlice";
 
 const Project = () => {
+  const dispatch = useDispatch();
+
+  const [fetchProjects] = useGetProjectsMutation();
+
+  useEffect(() => {
+    const getProjectsFunc = async () => {
+      try {
+        const res = await fetchProjects();
+        console.log(res);
+        //dispatch(setProjects(res.data));
+      } catch {
+        console.log("Error fetching projects");
+      }
+    };
+
+    getProjectsFunc();
+  }, [fetchProjects]);
+
   return (
     <div className="w-11/12 mx-auto mt-5 rounded bg-gray-700">
       <div className="flex">
@@ -11,6 +32,16 @@ const Project = () => {
           Create New
         </button>
       </div>
+      <table className="w-full mt-5">
+        <thead className="w-full">
+          <tr className="w-full">
+            <th className="text-gray-300 font-medium">Project Name</th>
+            <th className="text-gray-300 font-medium">Active Members</th>
+            <th className="text-gray-300 font-medium">Active Events</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
     </div>
   );
 };

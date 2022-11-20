@@ -10,14 +10,16 @@ const projectsRouter = express.Router();
 
 projectsRouter.get("/", auth, async (req, res) => {
   try {
-    const query = `INSERT INTO project(project_name) VALUES(?)`;
+    const query = `SELECT project.project_id,works_on.works_on_id, project_name, is_admin FROM project
+    JOIN WORKS_ON ON project.project_id = works_on.project_id
+    WHERE user_id = ?`;
     const valuesArr = [req.user.id];
     dbConnection.query(query, valuesArr, async (err, results) => {
       if (results) {
         console.log(results);
         return res.status(200).json(results);
-      } else
-        return res.status(400).send("Bad Request- a record was not created");
+      } else console.log(err);
+      return res.status(400).send("Bad Request- unable to retreive records");
     });
   } catch (err) {
     console.log(err.message);
