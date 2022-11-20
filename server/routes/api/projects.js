@@ -4,8 +4,8 @@ import auth from "../../middleware/auth.js";
 
 const projectsRouter = express.Router();
 
-// @route    GET api/projects/:id
-// @desc     Get projects for specific user
+// @route    GET api/projects
+// @desc     Get projects for specific user (user based on token)
 // @access   PRIVATE
 
 projectsRouter.get("/", auth, async (req, res) => {
@@ -15,6 +15,30 @@ projectsRouter.get("/", auth, async (req, res) => {
    FROM project
    JOIN WORKS_ON ON project.project_id = works_on.project_id
    WHERE user_id = ?`;
+    const valuesArr = [req.user.id];
+    dbConnection.query(query, valuesArr, async (err, results) => {
+      if (results) {
+        console.log(
+          `${results.length} records retreived for user ${req.user.id}`
+        );
+        return res.status(200).json(results);
+      } else console.log(err);
+      return res.status(400).send("Bad Request- unable to retreive records");
+    });
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route    GET api/projects/:id
+// @desc     Get projects details for specific project (project based on id)
+// @access   PRIVATE
+projectsRouter.get("/:id", auth, async (req, res) => {
+  try {
+    const query = `SELECT * from project
+    JOIN works_on ON works_on.project_id = project.project_id
+    WHERE user_id = 15 AND project.project_id = 4`;
     const valuesArr = [req.user.id];
     dbConnection.query(query, valuesArr, async (err, results) => {
       if (results) {
