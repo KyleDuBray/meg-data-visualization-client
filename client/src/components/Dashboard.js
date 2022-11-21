@@ -8,7 +8,7 @@ import ProjectPage from "./projects/ProjectPage";
 const Dashboard = () => {
   return (
     <>
-      <div className="w-full h-3/4 flex justify-center">
+      <div className="w-full h-full flex justify-center">
         <div className="hidden md:block bg-gray-800  h-full rounded-bl-lg">
           <Sidebar />
         </div>

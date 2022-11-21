@@ -6,7 +6,7 @@ import useMenuToggler from "../hooks/useMenuToggler";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
 import { IoNotificationsOutline } from "react-icons/io5";
-
+import brain from "../assets/brain.png";
 import {
   useGetNotificationsMutation,
   useSetNotificationsReadMutation,
@@ -72,11 +72,7 @@ const Navbar = () => {
               <div className="flex-shrink-0">
                 {/* https://icons8.com/icons/set/brain */}
                 <Link to="/">
-                  <img
-                    className="h-8 w-8"
-                    src="./icons/brain.png"
-                    alt="brain icon"
-                  />
+                  <img className="h-8 w-8" src={brain} alt="brain icon" />
                 </Link>
               </div>
               {/* <-- Main Nav Links --> */}
