@@ -127,38 +127,56 @@ projectsRouter.post("/", auth, async (req, res) => {
 // @access   PRIVATE
 
 projectsRouter.post("/add-user", auth, async (req, res) => {
-  const { project_id, user_id, isAdmin } = req.body;
+  let { email, project_id, isAdmin } = req.body;
+  if (!isAdmin) isAdmin = 0;
   try {
-    // First query to see if user who made request is authorized to add another user to project
-    const query =
-      "SELECT project_name, p.project_id, is_admin FROM project AS p JOIN works_on as W ON p.project_id = w.project_id WHERE p.project_id = ? AND w.user_id = ?";
-    const valuesArr = [project_id, req.user.id];
-    dbConnection.query(query, valuesArr, async (err, results) => {
-      console.log(results);
-      if (!results || results.length === 0) {
+    const query = "SELECT * FROM user WHERE email = ?";
+    const val = [email];
+    dbConnection.query(query, val, async (err, preresults) => {
+      if (!preresults || preresults.length === 0)
         return res.status(400).send("Bad Request- a record was not created");
-      }
-      if (results[0].is_admin === 0) {
-        return res.status(401).send("Unauthorized- a record was not created.");
-      }
+      console.log(preresults[0]);
+      const user_id = preresults[0].user_id;
       try {
-        // If project exists and request user is admin, call stored procedure to add new
-        // user to project and create notification for them
-        const query2 = "CALL add_user_to_project(?, ?, ?, ?)";
-        const valuesArr2 = [
-          project_id,
-          user_id,
-          isAdmin,
-          `You have been added to the ${results[0].project_name} project.`,
-        ];
-        dbConnection.query(query2, valuesArr2, (err2, results2) => {
-          console.log(results2);
-          if (!results2 || results2.length == 0) {
+        // First query to see if user who made request is authorized to add another user to project
+        const query =
+          "SELECT project_name, p.project_id, is_admin FROM project AS p JOIN works_on as W ON p.project_id = w.project_id WHERE p.project_id = ? AND w.user_id = ?";
+        const valuesArr = [project_id, req.user.id];
+        dbConnection.query(query, valuesArr, async (err, results) => {
+          console.log(results);
+          if (!results || results.length === 0) {
             return res
               .status(400)
               .send("Bad Request- a record was not created");
           }
-          return res.status(201).json(results2);
+          if (results[0].is_admin === 0) {
+            return res
+              .status(401)
+              .send("Unauthorized- a record was not created.");
+          }
+          try {
+            // If project exists and request user is admin, call stored procedure to add new
+            // user to project and create notification for them
+            const query2 = "CALL add_user_to_project(?, ?, ?, ?)";
+            const valuesArr2 = [
+              project_id,
+              user_id,
+              isAdmin,
+              `You have been added to the ${results[0].project_name} project.`,
+            ];
+            dbConnection.query(query2, valuesArr2, (err2, results2) => {
+              console.log(results2);
+              if (!results2 || results2.length == 0) {
+                return res
+                  .status(400)
+                  .send("Bad Request- a record was not created");
+              }
+              return res.status(201).json(results2);
+            });
+          } catch (err) {
+            console.log(err.message);
+            res.status(500).send("Server Error");
+          }
         });
       } catch (err) {
         console.log(err.message);

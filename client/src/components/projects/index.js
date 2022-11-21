@@ -66,7 +66,7 @@ const Project = () => {
         <tbody>{renderProjectItems()}</tbody>
       </table>
       <Modal handleClose={setModalOpen} isOpen={modalOpen}>
-        <AddProjectForm />
+        <AddProjectForm handleClose={() => setModalOpen(false)} />
       </Modal>
     </div>
   );

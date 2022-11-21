@@ -32,10 +32,10 @@ export const projectApi = createApi({
       }),
     }),
     addUserToProject: builder.mutation({
-      query: (name) => ({
-        url: `projects`,
+      query: (values) => ({
+        url: `projects/add-user`,
         method: "POST",
-        body: { project_name: name },
+        body: { ...values },
       }),
     }),
   }),
@@ -45,4 +45,5 @@ export const {
   useGetProjectsMutation,
   useGetUsersForProjectMutation,
   useCreateProjectMutation,
+  useAddUserToProjectMutation,
 } = projectApi;

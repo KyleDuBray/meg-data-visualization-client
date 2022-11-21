@@ -22,6 +22,8 @@ const ProjectUsers = () => {
     })[0];
   });
 
+  //useEffect(() => console.log(project), [project]);
+
   useEffect(() => {
     const getUsersFunc = async () => {
       try {
@@ -90,7 +92,10 @@ const ProjectUsers = () => {
       )}
 
       <Modal handleClose={setModalOpen} isOpen={modalOpen}>
-        <AddUserForm />
+        <AddUserForm
+          handleClose={() => setModalOpen(false)}
+          project_id={project.project_id}
+        />
       </Modal>
     </div>
   );

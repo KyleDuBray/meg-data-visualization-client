@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Field } from "react-final-form";
 import { useCreateProjectMutation } from "../../slices/projectApi";
 
-const AddProjectForm = () => {
+const AddProjectForm = ({ handleClose }) => {
   const [createProject] = useCreateProjectMutation();
 
   const LABELSTYLES = "block mb-2 text-sm font-medium text-gray-900 mt-5";
@@ -13,7 +13,7 @@ const AddProjectForm = () => {
     try {
       const res = await createProject(values.projectName);
       console.log(res);
-      // TODO: HANDLE CLOSE ON SUBMIT
+      handleClose();
     } catch (err) {
       console.log("There was an error adding a new project.");
     }
