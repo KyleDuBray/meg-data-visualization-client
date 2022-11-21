@@ -3,6 +3,7 @@ import { MdOutlineCreate } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import { useGetProjectsMutation } from "../../slices/projectApi";
 import { setProjects } from "../../slices/projectSlice";
+import AddProjectForm from "./AddProjectForm";
 import Modal from "./Modal";
 import ProjectItem from "./ProjectItem";
 
@@ -64,7 +65,9 @@ const Project = () => {
         </thead>
         <tbody>{renderProjectItems()}</tbody>
       </table>
-      <Modal handleClose={setModalOpen} isOpen={modalOpen}></Modal>
+      <Modal handleClose={setModalOpen} isOpen={modalOpen}>
+        <AddProjectForm handleClose={setModalOpen} />
+      </Modal>
     </div>
   );
 };

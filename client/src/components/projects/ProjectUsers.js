@@ -23,9 +23,9 @@ const ProjectUsers = () => {
   }, [fetchUsers, id]);
 
   const renderUserRows = () => {
-    return users.map((user) => {
+    return users.map((user, index) => {
       return (
-        <tr className="text-center">
+        <tr className="text-center" key={index}>
           <td className="text-gray-300 font-medium py-4">
             {user.first_name + " " + user.last_name}
             {user.is_admin ? (

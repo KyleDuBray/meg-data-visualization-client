@@ -85,6 +85,7 @@ projectsRouter.get("/users/:id", auth, async (req, res) => {
 // @desc     Create new project
 // @access   PRIVATE
 projectsRouter.post("/", auth, async (req, res) => {
+  console.log(req.body);
   const { project_name } = req.body;
   try {
     const query = "INSERT INTO project(project_name) VALUES(?)";
