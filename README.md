@@ -28,17 +28,16 @@ In order to successfully run this script, you must do the following:
 
 - install/update the following modules, if not already:
 
-  - pandas
   - matplotlib
   - numpy
-  - scipy.io
   - os
   - mne
-  - mne_features
+  - tensorflow
+  - math
+  
+- You will also have to install a mysql driver. To do this, you can just run the "pip install mysql-connector-python" command in the Anaconda prompt.
 
-- Obtain the correct data files.
-  - The data files can be found here: https://data.donders.ru.nl/collections/di/dccn/DSC_3015000.00_677?0 .
-    - Note: In order to get access to the files, you must create an account for eduID or some other acceptable account for Donders Repository.
-  - Once you have access, you need to download the A1-raw.fif and A1-eve.fif files.
+lastly, you will have to make sure that Clean_raw.fif is in the same location as the python notebook.
+
 
 After you have completed the previous steps, you should be able to run the python script successfully.
